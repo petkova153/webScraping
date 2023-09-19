@@ -34,20 +34,21 @@ public class WebScrapingApplication {
 		in.close();
 		String html = response.toString();
 			Document doc = Jsoup.parse(html);
-//			Elements links = doc.select("a[href]");
-//			//System.out.println(doc);
-//			Elements prices = doc.select("span[content]");
+
+			Elements prices = doc.select("span[content]");
+			//Elements links = doc.select("a[href]");
+//			System.out.println(doc);
 //			for (Element link : links) {
 //				String href = link.attr("href");
 //				System.out.println(href);
 //			}
-//			for (Element price : prices) {
-//				System.out.println(price);
-//				String prc = price.attr("content");
-//				System.out.println(prc);
-//			}
+			for (Element price : prices) {
+				System.out.println(price);
+				String prc = price.attr("content");
+				System.out.println(prc);
+			}
 
-						Elements spans = doc.select("img");
+			Elements spans = doc.select("img");
 			for (Element link : spans) {
 				String href = link.attr("alt");
 				System.out.println(href);
