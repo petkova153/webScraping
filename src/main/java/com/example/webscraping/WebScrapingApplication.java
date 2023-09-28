@@ -19,7 +19,7 @@ public class WebScrapingApplication {
 
 		//SpringApplication.run(WebScrapingApplication.class, args);
 		try{
-		String url = "https://www.barbora.lt/darzoves-ir-vaisiai/vaisiai-ir-uogos";
+		String url = "https://www.rimi.lt/e-parduotuve/lt/produktai/vaisiai-darzoves-ir-geles/vaisiai-ir-uogos/c/SH-15-3?page=1&pageSize=80&query=%3Arelevance%3AallCategories%3ASH-15-3%3AassortmentStatus%3AinAssortment";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 // optional request header
@@ -35,24 +35,59 @@ public class WebScrapingApplication {
 		String html = response.toString();
 			Document doc = Jsoup.parse(html);
 
-			Elements prices = doc.select("span[content]");
-			//Elements links = doc.select("a[href]");
-//			System.out.println(doc);
-//			for (Element link : links) {
-//				String href = link.attr("href");
-//				System.out.println(href);
+//			//barbora
+//			Elements products  = doc.select("div.b-product--wrap2");
+//
+//			for (Element product : products){
+//
+//				Elements spans = product.select("img");
+//				for (Element link : spans) {
+//					String href = link.attr("alt");
+//					System.out.println(href);
+//				}
+//
+//				Elements prices = product.select("span.b-product-price-current-number");
+//				for (Element price : prices) {
+//					String prc = price.attr("content");
+//					System.out.println(prc);
+//				}
 //			}
-			for (Element price : prices) {
-				System.out.println(price);
-				String prc = price.attr("content");
-				System.out.println(prc);
+
+//iki
+//			Elements products  = doc.select("div.css-jpvoog");
+//			System.out.println(doc);
+//			for (Element product : products){
+//
+//				Elements spans = product.select("p.css-abaudk");
+//				for (Element link : spans) {
+//					System.out.println(link);
+//				}
+//
+//				Elements prices = product.select("p.css-lrnbrk");
+//				for (Element price : prices) {
+//					System.out.println(price);
+//				}
+//			}
+
+//rimi
+			Elements products  = doc.select("li.product-grid__item");
+			for (Element product : products){
+
+				Elements spans = product.select("p.card__name");
+				for (Element link : spans) {
+					String pName = link.toString();
+					String picture = pName.substring(pName.indexOf("e\">")+3,pName.indexOf("</"));
+					System.out.println(picture);
+				}
+
+				Elements prices = product.select("p.card__price-per");
+				for (Element price : prices) {
+					String pPrice = price.toString();
+					String cleanPrice = pPrice.substring(pPrice.indexOf("r\">")+3,pPrice.indexOf("</"));
+					System.out.println(cleanPrice);
+				}
 			}
 
-			Elements spans = doc.select("img");
-			for (Element link : spans) {
-				String href = link.attr("alt");
-				System.out.println(href);
-			}
 		}
 		catch(Exception e){
 			e.getMessage();
