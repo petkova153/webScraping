@@ -21,12 +21,10 @@ public class WebScrapingApplication {
 
 		//SpringApplication.run(WebScrapingApplication.class, args);
 		try{
-		String url = "https://www.barbora.lt/darzoves-ir-vaisiai/darzoves-ir-grybai";
+		String url = "https://www.rimi.lt/e-parduotuve/lt/produktai/vaisiai-darzoves-ir-geles/c/SH-15";
 
 		String html = setUpHTML(url);
-//			System.out.println("here");
 			 Document doc = Jsoup.parse(html);
-//			System.out.println("here2");
 			int pages = getPages(doc);
 			System.out.println(pages);
 			if (url.contains("barbora")){
@@ -36,24 +34,6 @@ public class WebScrapingApplication {
 				parseRimi(doc,url);
 			}
 			if (pages > 0) loopThroughPages(doc,url,pages);
-
-
-
-//iki
-//			Elements products  = doc.select("div.css-jpvoog");
-//			System.out.println(doc);
-//			for (Element product : products){
-//
-//				Elements spans = product.select("p.css-abaudk");
-//				for (Element link : spans) {
-//					System.out.println(link);
-//				}
-//
-//				Elements prices = product.select("p.css-lrnbrk");
-//				for (Element price : prices) {
-//					System.out.println(price);
-//				}
-//			}
 
 		}
 		catch(Exception e){
@@ -139,7 +119,7 @@ public class WebScrapingApplication {
 			Elements pages = category.select("a");
 			for (Element page: pages){
 				String pageNumbers = page.toString();
-				pageNumbers = pageNumbers.substring(pageNumbers.indexOf("ge=")+3,pageNumbers.indexOf("\">"));
+				pageNumbers = pageNumbers.substring(pageNumbers.indexOf("?page=")+6,pageNumbers.indexOf("\">"));
 				if (pageNumbers.length()<3) {
 				try {
 					int pageNumber = Integer.parseInt(pageNumbers);
